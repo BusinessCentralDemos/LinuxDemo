@@ -1,4 +1,4 @@
-﻿name: ' Create release'
+name: ' Create release'
 
 on:
   workflow_dispatch:
@@ -108,7 +108,7 @@ jobs:
           $projects | ForEach-Object {
             $thisProject = $_
             if ($thisProject -and ($thisProject -ne '.')) {
-              $project = $thisProject.Replace('\','_')
+              $project = $thisProject.Replace('\','_').Replace('/','_')
             }
             else {
               $project = $env:repoName
@@ -192,7 +192,7 @@ jobs:
             core.setOutput('releaseId', releaseId);
 
   UploadArtifacts:
-    runs-on: [ Ubuntu-latest ] 
+    runs-on: [ Ubuntu-latest ]
     needs: [ CreateRelease ]
     strategy:
       matrix: ${{ fromJson(needs.CreateRelease.outputs.artifacts) }}
